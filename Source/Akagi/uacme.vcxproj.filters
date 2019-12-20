@@ -28,6 +28,9 @@
     <Filter Include="shared">
       <UniqueIdentifier>{629ff935-c53a-4df8-99ee-29698f72e6b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="appinfo">
+      <UniqueIdentifier>{b3b23f8d-a79f-4195-85a2-ce0665938c27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -164,6 +167,12 @@
     </ClCompile>
     <ClCompile Include="methods\dwells.c">
       <Filter>Source Files\methods</Filter>
+    </ClCompile>
+    <ClCompile Include="appinfo\x64\appinfo64.c">
+      <Filter>appinfo</Filter>
+    </ClCompile>
+    <ClCompile Include="appinfo\x86-32\appinfo32.c">
+      <Filter>appinfo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
