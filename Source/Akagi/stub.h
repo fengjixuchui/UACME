@@ -1,14 +1,14 @@
 /*******************************************************************************
 *
-*  (C) COPYRIGHT AUTHORS, 2015 - 2020
+*  (C) COPYRIGHT AUTHORS, 2018 - 2020
 *
-*  TITLE:       SIMDA.H
+*  TITLE:       STUB.H
 *
-*  VERSION:     3.27
+*  VERSION:     3.50
 *
-*  DATE:        10 Sep 2020
-*
-*  Prototypes and definitions for Simda method.
+*  DATE:        14 Sep 2020
+* 
+*  Kuma stub header file
 *
 * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
 * ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED
@@ -18,5 +18,8 @@
 *******************************************************************************/
 #pragma once
 
-NTSTATUS ucmSimdaTurnOffUac(
-    VOID);
+VOID __cdecl Stub_main();
+BOOL WINAPI Stub_DllMain(
+    _In_ HINSTANCE hinstDLL,
+    _In_ DWORD fdwReason,
+    _In_ LPVOID lpvReserved);

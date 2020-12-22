@@ -1,14 +1,14 @@
 /*******************************************************************************
 *
-*  (C) COPYRIGHT AUTHORS, 2017 - 2019
+*  (C) COPYRIGHT AUTHORS, 2020
 *
-*  TITLE:       B33F.H
+*  TITLE:       AZAGARAMPUR.H
 *
-*  VERSION:     3.17
+*  VERSION:     3.53
 *
-*  DATE:        18 Mar 2019
+*  DATE:        09 Nov 2020
 *
-*  Prototypes and definitions for b33f method.
+*  Prototypes and definitions for AzAgarampur methods.
 *
 * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
 * ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED
@@ -18,6 +18,16 @@
 *******************************************************************************/
 #pragma once
 
-NTSTATUS ucmCOMHandlersMethod(
+NTSTATUS ucmNICPoisonMethod(
     _In_ PVOID ProxyDll,
     _In_ DWORD ProxyDllSize);
+
+NTSTATUS ucmIeAddOnInstallMethod(
+    _In_ PVOID ProxyDll,
+    _In_ DWORD ProxyDllSize);
+
+NTSTATUS ucmWscActionProtocolMethod(
+    _In_ LPWSTR lpszPayload);
+
+NTSTATUS ucmFwCplLuaMethod2(
+    _In_ LPWSTR lpszPayload);
